@@ -2,8 +2,6 @@
 
 # Solana Agent Kit
 
-
-
 ![Solana Agent Kit Cover 1 (3)](https://github.com/user-attachments/assets/cfa380f6-79d9-474d-9852-3e1976c6de70)
 
 
@@ -24,6 +22,10 @@ An open-source toolkit for connecting AI agents to Solana protocols. Now, any ag
 - And more...
 
 Anyone - whether an SF-based AI researcher or a crypto-native builder - can bring their AI agents trained with any model and seamlessly integrate with Solana.
+
+
+[![Run on Repl.it](https://replit.com/badge/github/sendaifun/solana-agent-kit)](https://replit.com/@sendaifun/Solana-Agent-Kit)
+> Replit template created by [Arpit Singh](https://github.com/The-x-35)
 
 ## 🔧 Core Blockchain Features
 
@@ -210,7 +212,24 @@ console.log("Price in BTC/USD:", price);
     ];
     const [signature, multisigPda ] = await agent.createMultsigAccount(members, 2);  
 ```
+ 
+## Examples
 
+### LangGraph Multi-Agent System
+
+The repository includes an advanced example of building a multi-agent system using LangGraph and Solana Agent Kit. Located in `examples/agent-kit-langgraph`, this example demonstrates:
+
+- Multi-agent architecture using LangGraph's StateGraph
+- Specialized agents for different tasks:
+  - General purpose agent for basic queries
+  - Transfer/Swap agent for transaction operations
+  - Read agent for blockchain data queries
+  - Manager agent for routing and orchestration
+- Fully typed TypeScript implementation
+- Environment-based configuration
+
+Check out the [LangGraph example](examples/agent-kit-langgraph) for a complete implementation of an advanced Solana agent system.
+ 
 ## Dependencies
 
 The toolkit relies on several key Solana and Metaplex libraries:
@@ -228,6 +247,17 @@ The toolkit relies on several key Solana and Metaplex libraries:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+
+## Contributors
+
+<a href="https://github.com/sendaifun/solana-agent-kit/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sendaifun/solana-agent-kit" />
+</a>
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=sendaifun/solana-agent-kit&type=Date)](https://star-history.com/#sendaifun/solana-agent-kit&Date)
 
 ## License
 
