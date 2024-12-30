@@ -202,6 +202,15 @@ const price = await agent.pythFetchPrice(
 console.log("Price in BTC/USD:", price);
 ```
 
+### Create a Multisig Wallet
+```tyescript
+    const members = [
+      { address: "Gw1cz9YA7bJaL5XcYiNex5Dd1XR6xdkWxJKpSAjbi11T", permissions: ["vote", "Intiate"] },
+      { address: "DoSCY8W5Ax17A9JsrkYm7GHkXRXXTgUjtDHzkXbsPAiX", permissions: ["vote"] },
+    ];
+    const [signature, multisigPda ] = await agent.createMultsigAccount(members, 2);  
+```
+
 ## Dependencies
 
 The toolkit relies on several key Solana and Metaplex libraries:

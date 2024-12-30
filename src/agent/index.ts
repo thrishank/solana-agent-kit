@@ -35,6 +35,11 @@ import {
   getOwnedAllDomains,
   resolveAllDomains,
   create_gibwork_task,
+  createMultsigAccount,
+  getMultisigVaultAddress,
+  createMultsigTransaction,
+  voteMultisigTransaction,
+  excuteMultisigTransaction,
 } from "../tools";
 import {
   CollectionDeployment,
@@ -336,5 +341,61 @@ export class SolanaAgentKit {
       tokenAmount,
       payer ? new PublicKey(payer) : undefined,
     );
+  }
+
+  async createMultsigAccount(
+    members: {
+      address: string;
+      permissions: ("Vote" | "Initiate" | "Execute")[];
+    }[],
+    threshold: number,
+  ): Promise<{ signature: string; multisigPda: string }> {
+    return createMultsigAccount(this, members, threshold);
+  }
+
+  async getMultisigVaultAddress(
+    multisigPda: PublicKey,
+    vaultIndex: number,
+  ): Promise<string> {
+    return getMultisigVaultAddress(multisigPda, vaultIndex);
+  }
+
+  async createMultsigTransaction(
+    multisig: PublicKey,
+    vaultIndex: number,
+    to: PublicKey,
+    amount: number,
+    mint?: PublicKey,
+    memo?: string,
+  ): Promise<number> {
+    return createMultsigTransaction(
+      this,
+      multisig,
+      vaultIndex,
+      to,
+      amount,
+      mint,
+      memo,
+    );
+  }
+
+  async voteMultisigTransaction(
+    multisigPda: PublicKey,
+    transactionIndex: number,
+    approve: boolean,
+  ): Promise<string> {
+    return voteMultisigTransaction(
+      this,
+      multisigPda,
+      transactionIndex,
+      approve,
+    );
+  }
+
+  async excuteMultisigTransaction(
+    multisigPda: PublicKey,
+    transactionIndex: number,
+  ): Promise<string> {
+    return excuteMultisigTransaction(this, multisigPda, transactionIndex);
   }
 }

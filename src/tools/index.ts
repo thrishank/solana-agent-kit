@@ -37,3 +37,9 @@ export * from "./openbook_create_market";
 export * from "./pyth_fetch_price";
 
 export * from "./create_gibwork_task";
+
+export * from "./create_multisig_squads";
+export * from "./get_multisig_vault_address";
+export * from "./create_multisig_transaction";
+export * from "./vote_multisig_transaction";
+export * from "./excute_multisig_transaction";
