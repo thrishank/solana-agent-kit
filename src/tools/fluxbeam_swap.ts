@@ -2,6 +2,7 @@ import { VersionedTransaction, PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../index";
 import { TOKENS, DEFAULT_OPTIONS } from "../constants";
 import { getMint } from "@solana/spl-token";
+
 /**
  * Swap tokens using FluxBeam DEX
  * @param agent SolanaAgentKit instance
@@ -11,7 +12,6 @@ import { getMint } from "@solana/spl-token";
  * @param slippageBps Slippage tolerance in basis points (default: 300 = 3%)
  * @returns Transaction signature
  */
-
 export async function swapFluxBeam(
   agent: SolanaAgentKit,
   outputMint: PublicKey,
@@ -42,7 +42,8 @@ export async function swapFluxBeam(
       )
     ).json();
 
-    const { swapTransaction } = await (
+    console.log(quoteResponse);
+    const response = await (
       await fetch(`${FLUXBEAM_API}/swap/transaction`, {
         method: "POST",
         headers: {
@@ -52,13 +53,12 @@ export async function swapFluxBeam(
           quoteResponse,
           userPublicKey: agent.wallet_address.toString(),
           wrapAndUnwrapSol: true,
-          dynamicComputeUnitLimit: true,
-          prioritizationFeeLamports: "auto",
         }),
       })
     ).json();
+    console.log(response);
     // Deserialize transaction
-    const swapTransactionBuf = Buffer.from(swapTransaction, "base64");
+    const swapTransactionBuf = Buffer.from(response.transaction, "base64");
 
     const transaction = VersionedTransaction.deserialize(swapTransactionBuf);
     // Sign and send transaction

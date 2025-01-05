@@ -22,24 +22,20 @@ export async function createPoolFluxBeam(
 ): Promise<string> {
   try {
     const FLUXBEAM_API = `https://api.fluxbeam.xyz/v1`;
-    // Check if input token is native SOL
-    const isNativeSol = token_a.equals(TOKENS.SOL);
 
-    // For native SOL, we use LAMPORTS_PER_SOL, otherwise fetch mint info
-    const token_a_decimals = isNativeSol
-      ? 9 // SOL always has 9 decimals
-      : (await getMint(agent.connection, token_a)).decimals;
-
-    // Calculate the correct amount based on actual decimals
-    const scaledAmount_a = token_a_amount * Math.pow(10, token_a_decimals);
-
-    const isNativeSol_ = token_b.equals(TOKENS.SOL);
-
-    const token_b_decimals = isNativeSol_
+    const isTokenA_NativeSol = token_a.equals(TOKENS.SOL);
+    const tokenA_Decimals = isTokenA_NativeSol
       ? 9
       : (await getMint(agent.connection, token_a)).decimals;
 
-    const scaledAmount_b = token_b_amount * Math.pow(10, token_b_decimals);
+    const scaledAmountTokenA = token_a_amount * Math.pow(10, tokenA_Decimals);
+
+    const isTokenB_NativeSol = token_b.equals(TOKENS.SOL);
+    const tokenB_Decimals = isTokenB_NativeSol
+      ? 9
+      : (await getMint(agent.connection, token_b)).decimals;
+
+    const scaledAmountTokenB = token_b_amount * Math.pow(10, tokenB_Decimals);
 
     const { poolTransaction } = await (
       await fetch(`${FLUXBEAM_API}/token_pools`, {
@@ -51,8 +47,8 @@ export async function createPoolFluxBeam(
           payer: agent.wallet_address,
           token_a: token_a,
           token_b: token_b,
-          token_a_amount: scaledAmount_a,
-          token_b_amount: scaledAmount_b,
+          token_a_amount: scaledAmountTokenA,
+          token_b_amount: scaledAmountTokenB,
         }),
       })
     ).json();

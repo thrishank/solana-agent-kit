@@ -548,7 +548,7 @@ export class SolanaAgentKit {
     inputAmount: number,
     inputMint?: PublicKey,
     slippageBps: number = DEFAULT_OPTIONS.SLIPPAGE_BPS,
-  ) {
+  ): Promise<string> {
     return swapFluxBeam(this, outputMint, inputAmount, inputMint, slippageBps);
   }
 
@@ -557,7 +557,7 @@ export class SolanaAgentKit {
     token_a_amount: number,
     token_b: PublicKey,
     token_b_amount: number,
-  ) {
+  ): Promise<string> {
     return createPoolFluxBeam(
       this,
       token_a,
