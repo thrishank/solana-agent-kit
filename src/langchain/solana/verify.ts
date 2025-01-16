@@ -39,7 +39,6 @@ export class SolanaProgramVerificationTool extends Tool {
 
       return JSON.stringify({
         status: "success",
-        message: "Program verification completed",
         details: {
           programId: parsedInput.programId,
           repository: parsedInput.github,
@@ -48,17 +47,12 @@ export class SolanaProgramVerificationTool extends Tool {
         },
       });
     } catch (error: any) {
-      // Return error response
-      return JSON.stringify(
-        {
-          status: "error",
-          message: error.message,
-          code: error.code || "VERIFICATION_ERROR",
-          details: error.stack,
-        },
-        null,
-        2,
-      );
+      return JSON.stringify({
+        status: "error",
+        message: error.message,
+        code: error.code || "VERIFICATION_ERROR",
+        details: error.stack,
+      });
     }
   }
 }
@@ -102,7 +96,6 @@ export class SolanaProgramVerificationStatusTool extends Tool {
         status: "error",
         message: error.message,
         code: "STATUS_CHECK_ERROR",
-        details: error.stack,
       });
     }
   }
