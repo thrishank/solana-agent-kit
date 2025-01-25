@@ -117,8 +117,14 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
+ 
   createNonTransferableTokenMint,
   mint_token2022,
+ 
+  getPriceInference,
+  getAllTopics,
+  getInferenceByTopicId,
+ 
 } from "../tools";
 import {
   Config,
@@ -143,6 +149,7 @@ import {
   GetAssetsByCreatorRpcInput,
   SearchAssetsRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
+import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1031,6 +1038,7 @@ export class SolanaAgentKit {
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
   }
+ 
 
   async createNonTransferableTokenMint(
     decimals: number,
@@ -1056,5 +1064,17 @@ export class SolanaAgentKit {
     amount?: number,
   ) {
     return mint_token2022(this, mint, destination, decimals, amount);
+   }
+  async getPriceInference(
+    tokenSymbol: string,
+    timeframe: string,
+  ): Promise<string> {
+    return getPriceInference(this, tokenSymbol, timeframe);
+  }
+  async getAllTopics(): Promise<AlloraTopic[]> {
+    return getAllTopics(this);
+  }
+  async getInferenceByTopicId(topicId: number): Promise<AlloraInference> {
+    return getInferenceByTopicId(this, topicId);
   }
 }
