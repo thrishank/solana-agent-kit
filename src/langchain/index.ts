@@ -135,6 +135,10 @@ import {
   SolanaGetAssetsByCreatorTool,
   SolanaGetInfoTool,
 } from "./index";
+import {
+  SolanaCreateNonTransferableTokenMintTool,
+  SolanaMintToken2022Tool,
+} from "./solana";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
   return [
@@ -246,5 +250,7 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetTool(solanaKit),
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
+    new SolanaCreateNonTransferableTokenMintTool(solanaKit),
+    new SolanaMintToken2022Tool(solanaKit),
   ];
 }
