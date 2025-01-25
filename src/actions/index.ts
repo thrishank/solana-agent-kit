@@ -162,10 +162,8 @@ export const ACTIONS = {
   GET_ASSET_ACTION: getAssetAction,
   GET_ASSETS_BY_AUTHORITY_ACTION: getAssetsByAuthorityAction,
   GET_ASSETS_BY_CREATOR_ACTION: getAssetsByCreatorAction,
- 
   CREATE_NON_TRANSFERABLE_MINT_ACTION: createNonTransferableMintAction,
   MINT_TOKEN_2022_ACTION: mintToken2022Action,
- 
   GET_PRICE_INFERENCE_ACTION: getPriceInferenceAction,
   GET_ALL_TOPICS_ACTION: getAllTopicsAction,
   GET_INFERENCE_BY_TOPIC_ID_ACTION: getInferenceByTopicIdAction,

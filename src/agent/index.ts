@@ -117,14 +117,11 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
- 
   createNonTransferableTokenMint,
   mint_token2022,
- 
   getPriceInference,
   getAllTopics,
   getInferenceByTopicId,
- 
 } from "../tools";
 import {
   Config,
@@ -1038,7 +1035,6 @@ export class SolanaAgentKit {
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
   }
- 
 
   async createNonTransferableTokenMint(
     decimals: number,
@@ -1064,7 +1060,7 @@ export class SolanaAgentKit {
     amount?: number,
   ) {
     return mint_token2022(this, mint, destination, decimals, amount);
-   }
+  }
   async getPriceInference(
     tokenSymbol: string,
     timeframe: string,

@@ -254,7 +254,6 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetAssetTool(solanaKit),
     new SolanaGetAssetsByAuthorityTool(solanaKit),
     new SolanaGetAssetsByCreatorTool(solanaKit),
- 
     new SolanaCreateNonTransferableTokenMintTool(solanaKit),
     new SolanaMintToken2022Tool(solanaKit),
     new SolanaAlloraGetPriceInference(solanaKit),
