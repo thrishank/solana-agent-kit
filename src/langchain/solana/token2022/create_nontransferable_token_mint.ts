@@ -3,10 +3,16 @@ import { SolanaAgentKit } from "../../../agent";
 
 export class SolanaCreateNonTransferableTokenMintTool extends Tool {
   name = "solana_create_non_transferable_token_mint";
-  description = `create a non transferable token mint
+  description = `Create a non-transferable token mint.
 
-  Inputs ( input is a JSON string ):
-  decimals: number, eg 9`;
+  Inputs (input is a JSON string):
+  {
+    "decimals": number, // e.g., 9
+    "tokenName": string, // e.g., "My Non-Transferable Token"
+    "tokenSymbol": string, // e.g., "MNT"
+    "uri": string, // e.g., "https://example.com/token-metadata"
+    "additionalMetadata": [["customField", "customValue"]] // optional
+  }`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();
@@ -19,11 +25,15 @@ export class SolanaCreateNonTransferableTokenMintTool extends Tool {
       const { mint, signature } =
         await this.solanaKit.createNonTransferableTokenMint(
           parsedInput.decimals,
+          parsedInput.tokenName,
+          parsedInput.tokenSymbol,
+          parsedInput.uri,
+          parsedInput.additionalMetadata || [],
         );
 
       return JSON.stringify({
         status: "success",
-        mint,
+        mint: mint.toString(),
         signature,
       });
     } catch (error: any) {

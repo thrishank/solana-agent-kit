@@ -15,31 +15,24 @@ import { Transaction } from "@solana/web3.js";
 import { sendAndConfirmTransaction } from "@solana/web3.js";
 import {
   createInitializeInstruction,
-  createUpdateFieldInstruction,
   pack,
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 import { PublicKey } from "@solana/web3.js";
-import { TransactionInstruction } from "@solana/web3.js";
 
 /**
  * Create a Non Transferable Token Mint
  * @async
  * @param agent SolanaAgentKit instance
  * @param decimals Token decimals
- * @param tokenName Name of the Token
- * @param tokenSymbol Symbol of the Token
- * @param uri URI of the Token
- * @param additionalMetadata additional metadata [["customField", "customValue"]]
  * @returns mint address and trnsaction signature
  */
-export async function createNonTransferableTokenMint(
+async function createNonTransferableMint(
   agent: SolanaAgentKit,
   decimals: number,
   tokenName: string,
   tokenSymbol: string,
   uri: string,
-  additionalMetadata: [] = [],
 ): Promise<{ mint: PublicKey; signature: string }> {
   try {
     const mintKeypair = Keypair.generate();
@@ -50,9 +43,8 @@ export async function createNonTransferableTokenMint(
       name: tokenName,
       symbol: tokenSymbol,
       uri,
-      additionalMetadata,
+      additionalMetadata: [],
     };
-
     const extensions = [
       ExtensionType.NonTransferableAccount,
       ExtensionType.MetadataPointer,
@@ -106,26 +98,12 @@ export async function createNonTransferableTokenMint(
       updateAuthority: agent.wallet_address,
     });
 
-    const setExtraMetadataInstructions: TransactionInstruction[] = [];
-    additionalMetadata.map((data) => {
-      setExtraMetadataInstructions.push(
-        createUpdateFieldInstruction({
-          updateAuthority: agent.wallet_address,
-          metadata: mint,
-          field: data[0],
-          value: data[1],
-          programId: TOKEN_2022_PROGRAM_ID,
-        }),
-      );
-    });
-
     const mintTransaction = new Transaction().add(
       createAccountInstruction,
       initializeNonTransferableMintInstruction,
       initMetadataPointerInstruction,
       initializeMintInstruction,
       initMetadataInstruction,
-      ...setExtraMetadataInstructions,
     );
 
     const signature = await sendAndConfirmTransaction(
@@ -134,8 +112,27 @@ export async function createNonTransferableTokenMint(
       [agent.wallet, mintKeypair],
       { commitment: "finalized" },
     );
+
     return { mint, signature };
   } catch (error: any) {
     throw new Error(`Creating mint failed: ${error.message}`);
   }
 }
+
+const solanaAgent = new SolanaAgentKit(
+  process.env.SOLANA_PRIVATE_KEY!,
+  process.env.RPC_URL!,
+  {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY!,
+    HELIUS_API_KEY: process.env.HELIUS_API_KEY!,
+    PERPLEXITY_API_KEY: process.env.PERPLEXITY_API_KEY!,
+  },
+);
+
+createNonTransferableMint(
+  solanaAgent,
+  0,
+  "agent",
+  "AGENT",
+  "https://solana.com",
+);

@@ -117,7 +117,7 @@ import {
   get_asset,
   get_assets_by_authority,
   get_assets_by_creator,
-  createNonTransferableMint,
+  createNonTransferableTokenMint,
   mint_token2022,
 } from "../tools";
 import {
@@ -1031,10 +1031,22 @@ export class SolanaAgentKit {
   ): Promise<DasApiAssetList> {
     return get_assets_by_creator(this, params);
   }
+
   async createNonTransferableTokenMint(
     decimals: number,
+    tokenName: string,
+    tokenSymbol: string,
+    uri: string,
+    additionalMetadata: [] = [],
   ): Promise<{ mint: PublicKey; signature: string }> {
-    return createNonTransferableMint(this, decimals);
+    return createNonTransferableTokenMint(
+      this,
+      decimals,
+      tokenName,
+      tokenSymbol,
+      uri,
+      additionalMetadata,
+    );
   }
 
   async mint_token2022(
