@@ -1037,7 +1037,7 @@ export class SolanaAgentKit {
     tokenName: string,
     tokenSymbol: string,
     uri: string,
-    additionalMetadata: [] = [],
+    additionalMetadata?: [string, string][],
   ): Promise<{ mint: PublicKey; signature: string }> {
     return createNonTransferableTokenMint(
       this,

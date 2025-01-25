@@ -7,6 +7,7 @@ const createNonTransferableMintAction: Action = {
   name: "CREATE_NON_TRANSFERABLE_MINT",
   similes: [
     "create non-transferable token",
+    "create non transferable NFT",
     "initialize non-transferable mint",
     "mint non-transferable tokens",
   ],

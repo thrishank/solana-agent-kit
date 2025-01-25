@@ -30,7 +30,7 @@ import { TransactionInstruction } from "@solana/web3.js";
  * @param tokenName Name of the Token
  * @param tokenSymbol Symbol of the Token
  * @param uri URI of the Token
- * @param additionalMetadata additional metadata [["customField", "customValue"]]
+ * @param additionalMetadata additional metadata as an array of tuples [["customField", "customValue"]] (optional)
  * @returns mint address and trnsaction signature
  */
 export async function createNonTransferableTokenMint(
@@ -39,7 +39,7 @@ export async function createNonTransferableTokenMint(
   tokenName: string,
   tokenSymbol: string,
   uri: string,
-  additionalMetadata: [] = [],
+  additionalMetadata?: [string, string][],
 ): Promise<{ mint: PublicKey; signature: string }> {
   try {
     const mintKeypair = Keypair.generate();
@@ -50,7 +50,7 @@ export async function createNonTransferableTokenMint(
       name: tokenName,
       symbol: tokenSymbol,
       uri,
-      additionalMetadata,
+      additionalMetadata: additionalMetadata || [],
     };
 
     const extensions = [
@@ -107,7 +107,7 @@ export async function createNonTransferableTokenMint(
     });
 
     const setExtraMetadataInstructions: TransactionInstruction[] = [];
-    additionalMetadata.map((data) => {
+    additionalMetadata!.map((data) => {
       setExtraMetadataInstructions.push(
         createUpdateFieldInstruction({
           updateAuthority: agent.wallet_address,
